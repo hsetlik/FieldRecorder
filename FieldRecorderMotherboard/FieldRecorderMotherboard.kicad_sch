@@ -2,9 +2,55 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid 215167c2-0572-4a6a-b64e-d51d7740d765)
+	(uuid "215167c2-0572-4a6a-b64e-d51d7740d765")
 	(paper "A4")
 	(lib_symbols)
+	(sheet
+		(at 66.04 15.24)
+		(size 67.945 45.085)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "f916d17e-5d2f-4890-81a1-791a689e4116")
+		(property "Sheetname" "AudioMCU"
+			(at 66.04 14.5284 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "AudioMCU.kicad_sch"
+			(at 66.04 60.9096 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "FieldRecorderMotherboard"
+				(path "/215167c2-0572-4a6a-b64e-d51d7740d765"
+					(page "2")
+				)
+			)
+		)
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")
