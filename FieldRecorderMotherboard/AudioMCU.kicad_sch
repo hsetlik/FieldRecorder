@@ -4494,6 +4494,16 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "The memory is APS12808L"
+		(exclude_from_sim no)
+		(at 105.41 237.744 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "31ce9bd3-06a9-4105-8ea0-81e12e8f1df9")
+	)
 	(symbol
 		(lib_id "Audio:PCM1860DBT")
 		(at 67.056 52.07 0)
