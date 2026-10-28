@@ -44,12 +44,16 @@
 
 I2C_HandleTypeDef hi2c1;
 
-OSPI_HandleTypeDef hospi1;
+OSPI_HandleTypeDef hospi2;
 
 SAI_HandleTypeDef hsai_BlockA1;
 DMA_HandleTypeDef hdma_sai1_a;
 
-UART_HandleTypeDef huart4;
+SD_HandleTypeDef hsd2;
+
+UART_HandleTypeDef huart5;
+
+PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 /* USER CODE BEGIN PV */
 /* Inspect in the debugger after boot */
@@ -63,10 +67,12 @@ void SystemClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
-static void MX_OCTOSPI1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_SAI1_Init(void);
-static void MX_UART4_Init(void);
+static void MX_OCTOSPI2_Init(void);
+static void MX_UART5_Init(void);
+static void MX_USB_OTG_HS_PCD_Init(void);
+static void MX_SDMMC2_SD_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -117,10 +123,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_OCTOSPI1_Init();
   MX_I2C1_Init();
   MX_SAI1_Init();
-  MX_UART4_Init();
+  MX_OCTOSPI2_Init();
+  MX_UART5_Init();
+  MX_USB_OTG_HS_PCD_Init();
+  MX_SDMMC2_SD_Init();
   /* USER CODE BEGIN 2 */
   if(PSRAM_Init(&hospi1) != PSRAM_OK) {
     Error_Handler();
@@ -162,17 +170,16 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = 64;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 12;
+  RCC_OscInitStruct.PLL.PLLN = 48;
   RCC_OscInitStruct.PLL.PLLP = 1;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -248,40 +255,40 @@ static void MX_I2C1_Init(void)
 }
 
 /**
-  * @brief OCTOSPI1 Initialization Function
+  * @brief OCTOSPI2 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_OCTOSPI1_Init(void)
+static void MX_OCTOSPI2_Init(void)
 {
 
-  /* USER CODE BEGIN OCTOSPI1_Init 0 */
+  /* USER CODE BEGIN OCTOSPI2_Init 0 */
 
-  /* USER CODE END OCTOSPI1_Init 0 */
+  /* USER CODE END OCTOSPI2_Init 0 */
 
   OSPIM_CfgTypeDef sOspiManagerCfg = {0};
 
-  /* USER CODE BEGIN OCTOSPI1_Init 1 */
+  /* USER CODE BEGIN OCTOSPI2_Init 1 */
 
-  /* USER CODE END OCTOSPI1_Init 1 */
-  /* OCTOSPI1 parameter configuration*/
-  hospi1.Instance = OCTOSPI1;
-  hospi1.Init.FifoThreshold = 1;
-  hospi1.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
-  hospi1.Init.MemoryType = HAL_OSPI_MEMTYPE_APMEMORY;
-  hospi1.Init.DeviceSize = 24;
-  hospi1.Init.ChipSelectHighTime = 1;
-  hospi1.Init.FreeRunningClock = HAL_OSPI_FREERUNCLK_DISABLE;
-  hospi1.Init.ClockMode = HAL_OSPI_CLOCK_MODE_0;
-  hospi1.Init.WrapSize = HAL_OSPI_WRAP_NOT_SUPPORTED;
-  hospi1.Init.ClockPrescaler = 2;
-  hospi1.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_NONE;
-  hospi1.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_ENABLE;
-  hospi1.Init.ChipSelectBoundary = 10;
-  hospi1.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_USED;
-  hospi1.Init.MaxTran = 0;
-  hospi1.Init.Refresh = 350;
-  if (HAL_OSPI_Init(&hospi1) != HAL_OK)
+  /* USER CODE END OCTOSPI2_Init 1 */
+  /* OCTOSPI2 parameter configuration*/
+  hospi2.Instance = OCTOSPI2;
+  hospi2.Init.FifoThreshold = 1;
+  hospi2.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
+  hospi2.Init.MemoryType = HAL_OSPI_MEMTYPE_MICRON;
+  hospi2.Init.DeviceSize = 32;
+  hospi2.Init.ChipSelectHighTime = 1;
+  hospi2.Init.FreeRunningClock = HAL_OSPI_FREERUNCLK_DISABLE;
+  hospi2.Init.ClockMode = HAL_OSPI_CLOCK_MODE_0;
+  hospi2.Init.WrapSize = HAL_OSPI_WRAP_NOT_SUPPORTED;
+  hospi2.Init.ClockPrescaler = 1;
+  hospi2.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_NONE;
+  hospi2.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_DISABLE;
+  hospi2.Init.ChipSelectBoundary = 0;
+  hospi2.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_BYPASSED;
+  hospi2.Init.MaxTran = 0;
+  hospi2.Init.Refresh = 0;
+  if (HAL_OSPI_Init(&hospi2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -290,13 +297,13 @@ static void MX_OCTOSPI1_Init(void)
   sOspiManagerCfg.NCSPort = 1;
   sOspiManagerCfg.IOLowPort = HAL_OSPIM_IOPORT_1_LOW;
   sOspiManagerCfg.IOHighPort = HAL_OSPIM_IOPORT_1_HIGH;
-  if (HAL_OSPIM_Config(&hospi1, &sOspiManagerCfg, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+  if (HAL_OSPIM_Config(&hospi2, &sOspiManagerCfg, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN OCTOSPI1_Init 2 */
+  /* USER CODE BEGIN OCTOSPI2_Init 2 */
 
-  /* USER CODE END OCTOSPI1_Init 2 */
+  /* USER CODE END OCTOSPI2_Init 2 */
 
 }
 
@@ -351,50 +358,117 @@ static void MX_SAI1_Init(void)
 }
 
 /**
-  * @brief UART4 Initialization Function
+  * @brief SDMMC2 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_UART4_Init(void)
+static void MX_SDMMC2_SD_Init(void)
 {
 
-  /* USER CODE BEGIN UART4_Init 0 */
+  /* USER CODE BEGIN SDMMC2_Init 0 */
 
-  /* USER CODE END UART4_Init 0 */
+  /* USER CODE END SDMMC2_Init 0 */
 
-  /* USER CODE BEGIN UART4_Init 1 */
+  /* USER CODE BEGIN SDMMC2_Init 1 */
 
-  /* USER CODE END UART4_Init 1 */
-  huart4.Instance = UART4;
-  huart4.Init.BaudRate = 115200;
-  huart4.Init.WordLength = UART_WORDLENGTH_8B;
-  huart4.Init.StopBits = UART_STOPBITS_1;
-  huart4.Init.Parity = UART_PARITY_NONE;
-  huart4.Init.Mode = UART_MODE_TX_RX;
-  huart4.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart4.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart4.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart4.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-  huart4.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart4) != HAL_OK)
+  /* USER CODE END SDMMC2_Init 1 */
+  hsd2.Instance = SDMMC2;
+  hsd2.Init.ClockEdge = SDMMC_CLOCK_EDGE_RISING;
+  hsd2.Init.ClockPowerSave = SDMMC_CLOCK_POWER_SAVE_DISABLE;
+  hsd2.Init.BusWide = SDMMC_BUS_WIDE_4B;
+  hsd2.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
+  hsd2.Init.ClockDiv = 0;
+  if (HAL_SD_Init(&hsd2) != HAL_OK)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_SetTxFifoThreshold(&huart4, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(&huart4, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_DisableFifoMode(&huart4) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN UART4_Init 2 */
+  /* USER CODE BEGIN SDMMC2_Init 2 */
 
-  /* USER CODE END UART4_Init 2 */
+  /* USER CODE END SDMMC2_Init 2 */
+
+}
+
+/**
+  * @brief UART5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_UART5_Init(void)
+{
+
+  /* USER CODE BEGIN UART5_Init 0 */
+
+  /* USER CODE END UART5_Init 0 */
+
+  /* USER CODE BEGIN UART5_Init 1 */
+
+  /* USER CODE END UART5_Init 1 */
+  huart5.Instance = UART5;
+  huart5.Init.BaudRate = 115200;
+  huart5.Init.WordLength = UART_WORDLENGTH_8B;
+  huart5.Init.StopBits = UART_STOPBITS_1;
+  huart5.Init.Parity = UART_PARITY_NONE;
+  huart5.Init.Mode = UART_MODE_TX_RX;
+  huart5.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart5.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart5.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart5.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart5.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&huart5, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart5, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&huart5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART5_Init 2 */
+
+  /* USER CODE END UART5_Init 2 */
+
+}
+
+/**
+  * @brief USB_OTG_HS Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USB_OTG_HS_PCD_Init(void)
+{
+
+  /* USER CODE BEGIN USB_OTG_HS_PCD_Init 0 */
+
+  /* USER CODE END USB_OTG_HS_PCD_Init 0 */
+
+  /* USER CODE BEGIN USB_OTG_HS_PCD_Init 1 */
+
+  /* USER CODE END USB_OTG_HS_PCD_Init 1 */
+  hpcd_USB_OTG_HS.Instance = USB_OTG_HS;
+  hpcd_USB_OTG_HS.Init.dev_endpoints = 9;
+  hpcd_USB_OTG_HS.Init.speed = PCD_SPEED_HIGH;
+  hpcd_USB_OTG_HS.Init.dma_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.phy_itface = USB_OTG_ULPI_PHY;
+  hpcd_USB_OTG_HS.Init.Sof_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.low_power_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.lpm_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.vbus_sensing_enable = DISABLE;
+  hpcd_USB_OTG_HS.Init.use_dedicated_ep1 = DISABLE;
+  hpcd_USB_OTG_HS.Init.use_external_vbus = DISABLE;
+  if (HAL_PCD_Init(&hpcd_USB_OTG_HS) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USB_OTG_HS_PCD_Init 2 */
+
+  /* USER CODE END USB_OTG_HS_PCD_Init 2 */
 
 }
 
@@ -429,18 +503,31 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, UI_BOOT0_Pin|UI_NRST_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(OCTOSPI_RST_GPIO_Port, OCTOSPI_RST_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : UI_BOOT0_Pin UI_NRST_Pin */
-  GPIO_InitStruct.Pin = UI_BOOT0_Pin|UI_NRST_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, UI_NRST_Pin|UI_BOOT0_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : OCTOSPI_RST_Pin */
+  GPIO_InitStruct.Pin = OCTOSPI_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(OCTOSPI_RST_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : UI_NRST_Pin UI_BOOT0_Pin */
+  GPIO_InitStruct.Pin = UI_NRST_Pin|UI_BOOT0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

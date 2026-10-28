@@ -57,10 +57,30 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define UI_BOOT0_Pin GPIO_PIN_8
-#define UI_BOOT0_GPIO_Port GPIOA
-#define UI_NRST_Pin GPIO_PIN_9
-#define UI_NRST_GPIO_Port GPIOA
+#define ADC_LRCK_Pin GPIO_PIN_4
+#define ADC_LRCK_GPIO_Port GPIOE
+#define ADC_BCK_Pin GPIO_PIN_5
+#define ADC_BCK_GPIO_Port GPIOE
+#define ADC_DATA_Pin GPIO_PIN_6
+#define ADC_DATA_GPIO_Port GPIOE
+#define OCTOSPI_RST_Pin GPIO_PIN_12
+#define OCTOSPI_RST_GPIO_Port GPIOE
+#define UI_NRST_Pin GPIO_PIN_3
+#define UI_NRST_GPIO_Port GPIOD
+#define UI_BOOT0_Pin GPIO_PIN_4
+#define UI_BOOT0_GPIO_Port GPIOD
+#define SD_CK_Pin GPIO_PIN_6
+#define SD_CK_GPIO_Port GPIOD
+#define SD_CMD_Pin GPIO_PIN_7
+#define SD_CMD_GPIO_Port GPIOD
+#define SD_D0_Pin GPIO_PIN_9
+#define SD_D0_GPIO_Port GPIOG
+#define SD_D1_Pin GPIO_PIN_10
+#define SD_D1_GPIO_Port GPIOG
+#define SD_D2_Pin GPIO_PIN_11
+#define SD_D2_GPIO_Port GPIOG
+#define SD_D3_Pin GPIO_PIN_12
+#define SD_D3_GPIO_Port GPIOG
 #define ADC_SCL_Pin GPIO_PIN_6
 #define ADC_SCL_GPIO_Port GPIOB
 #define ADC_SDA_Pin GPIO_PIN_7
