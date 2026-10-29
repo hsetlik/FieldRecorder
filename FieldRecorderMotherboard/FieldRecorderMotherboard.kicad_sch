@@ -6,8 +6,54 @@
 	(paper "A4")
 	(lib_symbols)
 	(sheet
+		(at 15.24 16.002)
+		(size 46.736 44.196)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5ad2ebaa-e11a-4089-bc77-43f139f57690")
+		(property "Sheetname" "Power"
+			(at 15.24 15.2904 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 15.24 60.7826 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "FieldRecorderMotherboard"
+				(path "/215167c2-0572-4a6a-b64e-d51d7740d765"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 66.04 15.24)
-		(size 67.945 45.085)
+		(size 40.132 45.085)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
